@@ -1,0 +1,155 @@
+<!doctype HTML>
+<head>
+
+<title>Sprite Example </title>
+</head>
+
+<body>
+<canvas width="550" height="400" style="border: 1px dashed black"> </canvas>
+    
+</body>
+
+<script>
+    var backgroundSpriteObject=
+        {
+//Define the X,Y position of the source sprite image and its width & height
+            sourceX: 0,
+            sourceY:64,
+            sourceWidth:550,
+            sourceHeight:400,
+            
+            //Defaine the X & Y position of the sprite on the canvas
+            x: 0,
+            y: 0,
+            width: 550,
+            height: 400,
+        };
+	
+	var catSpriteObject=
+        {
+//Define the X,Y position of the source sprite image and its width & height
+            sourceX: 0,
+            sourceY:0,
+            sourceWidth:64,
+            sourceHeight:64,
+            
+            //Defaine the X & Y position of the sprite on the canvas
+            x: 0,
+            y: 0,
+            width: 64,
+            height: 64
+        };
+	
+	 var tigerSpriteObject=
+        {
+//Define the X,Y position of the source sprite image and its width & height
+            sourceX: 64,
+            sourceY:0,
+            sourceWidth:64,
+            sourceHeight:64,
+            
+            //Defaine the X & Y position of the sprite on the canvas
+            x: 0,
+            y: 0,
+            width: 64,
+            height: 64
+        };
+    
+      var canvas = document.querySelector("canvas");
+      var drawingSurface = canvas.getContext("2d");
+    
+    //Define an array of sprites
+     var sprites = [];
+	
+	    //Create a clone of the 'spriteObject' 
+    var background = Object.create(backgroundSpriteObject);
+    background.y= 0; //initial y position of the cat on the canvas
+    sprites.push(background); //push the sprite object to the array
+    
+    //Load the image of the background 
+    var  image = new Image();
+    image.addEventListener("load",loadHandler, false);
+    image.src= "images/tileSheetWithBackground.png"; //the path to the cat.png file
+	
+	
+    //Create a clone of the 'spriteObject' 
+    var cat = Object.create(catSpriteObject);
+    cat.y= 168; //initial y position of the cat on the canvas
+    sprites.push(cat); //push the sprite object to the array
+    
+    //Load the image of the background 
+    var  image = new Image();
+    image.addEventListener("load",loadHandler, false);
+    image.src= "images/tileSheetWithBackground.png"; //the path to the cat.png file
+    
+	
+	 //Create a clone of the 'spriteObject' 
+    var tiger = Object.create(tigerSpriteObject);
+    tiger.y= 0; //initial y position of the cat on the canvas
+    sprites.push(tiger); //push the sprite object to the array
+    
+    //Load the image of the tiger 
+    var  image = new Image();
+    image.addEventListener("load",loadHandler, false);
+    image.src= "images/tileSheetWithBackground.png"; //the path to the cat.png file
+    
+
+	
+    function loadHandler()
+    {
+        update();
+    }
+    
+    function update()
+    {
+        //create the animation loop
+        window.requestAnimationFrame(update, canvas);
+        
+        //every frame, move the cat in x direction by one pixel
+        cat.x++;
+		tiger.y++;
+        
+		
+		
+		if(cat.x >550){
+			cat.x = 0;
+		}
+		
+		if(tiger.y > 400){
+			tiger.y = 0;
+		}
+		
+        render(); //render the cat
+    }
+
+    function render()
+    {
+        //clear the drawing surface 
+        drawingSurface.clearRect(0,0,canvas.width,canvas.height);
+        
+        if(sprites.length!=0)
+            {
+                
+                for(var i=0; i<sprites.length;i++)
+                    {
+              var sprite = sprites[i]; //get the reference to the index we are iterating through in this loop
+                           drawingSurface.drawImage(
+                image,
+                sprite.sourceX, sprite.sourceY, sprite.sourceWidth, sprite.sourceHeight,//source image
+                sprite.x,sprite.y,sprite.width,sprite.height  //destination -- draw at x,y of sprite on the canvas with a X,Y dimension of the destination on the canvas (as defined in the sprite object)
+                );
+                    }
+                
+                
+            }
+        
+        
+    }
+    
+    
+    
+</script>
+        
+    
+    
+          
